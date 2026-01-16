@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Nav } from "@/components/ui/nav";
 
 export default function Home() {
   return (
@@ -20,14 +21,16 @@ export default function Home() {
         priority
       />
 
-      <header className="col-start-1 row-start-1 flex flex-col items-center justify-center">
+      <header className="col-start-1 row-start-1 flex justify-start items-start">
+        <Nav />
+      </header>
+
+      <main className="col-start-1 row-start-1 flex flex-col items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl md:text-6xl text-white">
             Welcome to Cienstream!
           </h1>
         </div>
-      </header>
-      <main className="col-start-1 row-start-1 flex flex-col items-center justify-center">
       </main>
     </div>
   );
