@@ -1,6 +1,7 @@
-import { Comic_Relief } from 'next/font/google';
+import { Inter, Lusitana } from 'next/font/google';
 
-export const comicRelief = Comic_Relief({
+export const inter = Inter({
   subsets: ['latin'],
-  weight: '400',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-sans',
 });

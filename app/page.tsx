@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Nav } from "@/components/ui/nav";
 
 export default function Home() {
   return (
@@ -20,10 +19,6 @@ export default function Home() {
         alt="hero mobile image"
         priority
       />
-
-      <header className="col-start-1 row-start-1 flex justify-start items-start">
-        <Nav />
-      </header>
 
       <main className="col-start-1 row-start-1 flex flex-col items-center justify-center">
         <div className="text-center">

@@ -1,5 +1,6 @@
 import './globals.css';
-import { comicRelief } from '@/app/ui/fonts';
+import { inter } from '@/app/ui/fonts';
+import MainNav from '@/components/ui/main-nav';
 
 export default function RootLayout({
   children,
@@ -8,7 +9,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${comicRelief.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        <header>
+          <MainNav />
+        </header>
+
+        {children}
+      </body>
     </html>
   );
 }
