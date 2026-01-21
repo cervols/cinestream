@@ -2,15 +2,15 @@
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import { useDebouncedCallback } from 'use-debounce';
+import Form from 'next/form';
 
 export default function Search({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleSearch = useDebouncedCallback((term) => {
-
+  async function handleFormAction(formData: FormData) {
+    const term = formData.get('q')?.toString() || '';
     const params = new URLSearchParams(searchParams);
     if (term) {
       params.set('q', term);
@@ -18,22 +18,27 @@ export default function Search({ placeholder }: { placeholder: string }) {
       params.delete('q');
     }
     replace(`${pathname}?${params.toString()}`);
-  }, 500);
+  }
 
   return (
-    <div className="relative flex flex-1">
+    <Form action={handleFormAction} className="relative flex flex-1">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
       <input
-        className="peer block w-full rounded-md border border-gray-200 py-2.25 pl-10 text-sm outline-2 placeholder:text-gray-500"
+        id="search"
+        name="q"
+        className="block w-full rounded-md border border-gray-500 py-2.25 pl-10 text-sm placeholder:text-gray-500 focus:border-white"
         placeholder={placeholder}
-        onChange={(e) => {
-          handleSearch(e.target.value)
-        }}
         defaultValue={searchParams.get('q')?.toString()}
       />
-      <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-    </div>
+      <MagnifyingGlassIcon className="absolute left-3 top-3 h-4.5 w-4.5 text-gray-500" />
+      <button
+        type="submit"
+        className="ml-2 px-4 py-2 rounded bg-gray-300 text-gray-900 hover:bg-gray-500 transition"
+      >
+        Search
+      </button>
+    </Form>
   );
 }
