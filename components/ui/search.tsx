@@ -2,7 +2,6 @@
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import Form from 'next/form';
 
 export default function Search({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
@@ -21,7 +20,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
   }
 
   return (
-    <Form action={handleFormAction} className="relative flex flex-1">
+    <form action={handleFormAction} className="relative flex flex-1">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
@@ -39,6 +38,6 @@ export default function Search({ placeholder }: { placeholder: string }) {
       >
         Search
       </button>
-    </Form>
+    </form>
   );
 }
