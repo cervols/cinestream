@@ -1,6 +1,7 @@
 'use server';
 
 import { z } from 'zod';
+import type { Plan } from '@/lib/definitions';
 
 const registrationSchema = z.object({
   id: z.string(),
@@ -9,28 +10,39 @@ const registrationSchema = z.object({
   password: z.string().min(6, 'Password must be at least 6 characters long'),
 })
 
-export type State = {
-  message?: string | null;
-  errors?: {
-    username?: string[];
-    email?: string[];
-    password?: string[];
-  };
-}
+const RegisterUser = registrationSchema.omit({id: true});
 
-const RegisterUser = registrationSchema.omit({id: true})
+export async function validateUser(user: { username: string; email: string; password: string }) {
+  const result = RegisterUser.safeParse(user);
 
-export async function registerUser(prevState: State, formData: FormData) {
-  const validatedFields = RegisterUser.safeParse({
-    username: formData.get('username'),
-    email: formData.get('email'),
-    password: formData.get('password'),
-  });
-
-  if (!validatedFields.success) {
+  if (!result.success) {
     return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
+      errors: result.error.flatten().fieldErrors,
+      message: 'Validation failed.',
+      success: false,
     };
   }
+  return { errors: {}, message: null, success: true };
+}
+
+export async function validatePlan(plan: string) {
+  const validPlans: Plan[] = ['basic', 'pro', 'premium'];
+
+  if (plan === '') {
+    return {
+      errors: { plan: ['Plan is required'] },
+      message: 'Validation failed.',
+      success: false,
+    };
+  }
+
+  if (!validPlans.includes(plan as Plan)) {
+    return {
+      errors: { plan: ['Invalid plan selected'] },
+      message: 'Validation failed.',
+      success: false,
+    };
+  }
+
+  return { errors: {}, message: null, success: true };
 }
