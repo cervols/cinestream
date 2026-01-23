@@ -1,3 +1,5 @@
+
+import Link from "next/link";
 import Image from "next/image";
 
 export default function Home() {
@@ -22,6 +24,12 @@ export default function Home() {
             <p className="text-xl mt-4">
               Your ultimate destination for movies and entertainment.
             </p>
+            <Link
+              href="/register"
+              className="inline-block mt-8 px-8 py-3 bg-white text-black rounded-2xl font-semibold text-lg shadow-lg border-2 border-gray-700 hover:bg-black hover:text-white hover:border-white focus:outline-none focus:ring-4 focus:ring-gray-400 transition"
+            >
+              Sign Up
+            </Link>
           </div>
         </div>
       </div>
@@ -35,6 +43,12 @@ export default function Home() {
           <p className="text-lg mt-4">
             Your ultimate destination for movies and entertainment.
           </p>
+          <Link
+            href="/register"
+            className="inline-block mt-8 px-8 py-3 bg-white text-black rounded-2xl font-semibold text-lg shadow-lg border-2 border-gray-700 hover:bg-black hover:text-white hover:border-white focus:bg-black focus:text-white focus:border-white focus:outline-none focus:ring-4 focus:ring-gray-400 transition"
+          >
+            Sign Up
+          </Link>
         </div>
       </div>
 
