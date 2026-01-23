@@ -45,3 +45,9 @@ export type MovieSearchResponse = {
   description: MovieSearchResult[];
   error_code: number;
 };
+
+export type Comment = {
+  id: string;
+  content: string;
+  createdAt: Date;
+};

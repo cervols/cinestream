@@ -1,7 +1,8 @@
 'use server';
 
+import prisma from '@/lib/prisma';
 import { z } from 'zod';
-import type { Plan } from '@/lib/definitions';
+import type { Plan, Comment } from '@/lib/definitions';
 
 const registrationSchema = z.object({
   id: z.string(),
@@ -45,4 +46,30 @@ export async function validatePlan(plan: string) {
   }
 
   return { errors: {}, message: null, success: true };
+}
+
+const commentSchema = z.object({
+  comment: z.string().min(1, 'Comment cannot be empty').max(500, 'Comment cannot exceed 500 characters'),
+});
+
+export async function validateComment(data: {comment: string  }) {
+  const result = commentSchema.safeParse(data);
+  if (!result.success) {
+    return {
+      errors: result.error.flatten().fieldErrors,
+      message: 'Validation failed.',
+      success: false,
+    };
+  }
+  return { errors: {}, message: null, success: true };
+}
+
+export async function createComment(prevState: any, formData: FormData) {
+  const content = formData.get('content') as string;
+  const validationResult = await validateComment({ comment: content });
+  if (!validationResult.success) {
+    return { message: validationResult.message };
+  }
+  await prisma.comment.create({ data: { content } });
+  return { message: null };
 }

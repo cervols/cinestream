@@ -8,7 +8,7 @@ const links = [
   { name: 'Home', href: '/' },
   { name: 'Why Us', href: '/#why-us' },
   { name: 'Movies', href: '/movies' },
-  { name: 'Contacts', href: '/#contacts' },
+  { name: 'Guestbook', href: '/guestbook' },
 ];
 
 export default function MainNav() {
